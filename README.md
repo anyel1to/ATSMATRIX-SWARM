@@ -4,7 +4,7 @@
 >
 > **ATSMATRIX // SWARM** is a zero-dependency, high-FPS multi-agent flocking simulation built for real-time visualization of emergent swarm behavior.
 
-Watch 500–1500+ autonomous agents form dynamic flocks, respond to pointer forces, and maintain smooth 60–120 FPS on modern hardware — pure Canvas, no frameworks, no build step.
+Watch 300–800+ autonomous agents form dynamic flocks, respond to pointer forces, and maintain smooth 60–120 FPS — pure Canvas, ES modules, no build step, no npm packages.
 
 ---
 
@@ -12,19 +12,19 @@ Watch 500–1500+ autonomous agents form dynamic flocks, respond to pointer forc
 
 👉 **https://anyel1to.github.io/ATSMATRIX-SWARM/**
 
-Open `index.html` locally for offline use.
+Open `index.html` locally (or run `npm start`) for offline use.
 
 ---
 
 ## ✨ Features
 
-- **High-performance engine** — Structure-of-Arrays + spatial grid hash. Zero per-frame allocations in the hot path.
-- **Classic flocking** — Separation, alignment, and cohesion with tunable weights.
-- **Pointer force field** — Attract or repel the swarm with your mouse.
-- **Speed-based coloring** — Agents shift hue based on velocity.
-- **Trails** — Configurable motion trails with alpha fade.
-- **Live HUD** — FPS, agent count, status, and mode.
-- **Keyboard + UI controls** — Instant switching between 500 / 1000 / 1500 agents.
+- **Boids core** — Separation, alignment, and cohesion with inverse-distance weighting, speed clamping, and organic noise
+- **O(n) neighbor search** — Fixed-cell spatial hash on preallocated `Int32Array` head/next buffers; zero per-frame allocation
+- **Pointer force field** — Repel or attract any flock with the cursor
+- **Performance pipeline** — SoA `Float32Array` state, DPR cap, trail fade via translucent composite, precomputed HSL palette, throttled DOM HUD
+- **Clean dark UI** — Minimal HUD with live FPS, agent count, status, population presets (300 / 500 / 800), pause, trails toggle
+- **Keyboard control** — `Space` pause · `M` mode · `T` trails · `R` reset · `1/2/3` population
+- **Toroidal world** — Seamless wrap-around flow, no edge pile-up
 
 ---
 
@@ -42,23 +42,32 @@ Open `index.html` locally for offline use.
 
 ---
 
-## 🏗️ Architecture
+## 🏗️ Project Structure
 
-- **Spatial Grid** — Fixed-cell hash with linked lists for O(1) neighbor lookup.
-- **SoA layout** — Separate typed arrays for position and velocity.
-- **Semi-implicit Euler** — Stable integration with speed clamping.
-- **Canvas 2D** — Optimized rendering path, DPR capped for consistency.
-- **Single file** — Everything inlined for zero-dependency deployment.
+```
+├── index.html          # markup + HUD shell
+├── css/style.css       # dark theme design tokens
+├── js/
+│   ├── config.js       # all tunable parameters
+│   ├── spatialGrid.js  # zero-alloc spatial hashing
+│   ├── flocking.js     # SoA boids core (typed arrays)
+│   ├── renderer.js     # Canvas 2D pipeline, trails, palette
+│   ├── hud.js          # throttled DOM stats
+│   └── main.js         # entry point, input, RAF loop
+├── server.js           # tiny static dev server
+└── package.json
+```
 
 ---
 
-## 💾 Local Setup
+## 💾 How to Run
 
 ```bash
-git clone https://github.com/anyel1to/ATSMATRIX-SWARM.git
-cd ATSMATRIX-SWARM
-# Open in any modern browser
-open index.html
+# Option 1 — built-in zero-dependency server
+npm start            # → http://localhost:3000
+
+# Option 2 — any static server
+npx serve .          # or: python3 -m http.server 8000
 ```
 
 No build tools. No dependencies. Pure frontend.
@@ -78,11 +87,3 @@ Part of the ATSMATRIX agent visualization suite alongside:
 - [atsmatrix-agent-visualizeR](https://github.com/anyel1to/atsmatrix-agent-visualizeR--ANYEL1TO)
 
 📧 DM for inquiries · [atsmatrix.com](https://atsmatrix.com)
-
----
-
-## Screenshots
-
-The live demo shows the full high-FPS swarm with force fields and trails.
-
-Open the live link above or run `index.html` locally to see it in action.
