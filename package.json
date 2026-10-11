@@ -1,0 +1,13 @@
+{
+  "name": "atsmatrix-swarm",
+  "version": "1.0.0",
+  "description": "ATSMATRIX // SWARM — High-performance multi-agent flocking simulation. Vanilla JS, zero dependencies.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["flocking", "boids", "simulation", "canvas", "performance", "atsmatrix"],
+  "license": "MIT",
+  "author": "ATSMATRIX Technologies"
+}
