@@ -83,8 +83,6 @@ Part of the ATSMATRIX agent visualization suite alongside:
 
 ## Screenshots
 
-![ATSMATRIX SWARM overview](screenshot1.jpg)
-*High-FPS multi-agent swarm with live force fields and motion trails.*
+The live demo shows the full high-FPS swarm with force fields and trails.
 
-![Force field interaction](screenshot2.jpg)
-*Pointer force field interacting with the flock.*
+Open the live link above or run `index.html` locally to see it in action.
